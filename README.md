@@ -1,51 +1,95 @@
-# Publish this portfolio on GitHub Pages
+# Juwairiyyah Saiyed · Portfolio
 
-The exported portfolio needs no application server, API key, database or paid hosting. The guide, native project decks, tour, image enlargement and animations run in the browser. GitHub builds the files on its own runner and hosts the result after your computer is switched off.
+**Curious about people. Serious about better products.**
 
-## First deployment
+I’m a Computer Science Engineering graduate seeking **Product Manager / Product Owner internships**. My experience spans frontend development, data analytics, AI applications, and project coordination. This portfolio brings that work together through interactive project presentations and an animated guide.
 
-1. Create a **public** GitHub repository, with `main` as the default branch. Choose any name such as `portfolio`, or use `YOUR-USERNAME.github.io` for a root profile site.
-2. Put the prepared source package's **contents** at the repository root. `package.json`, `app/` and `.github/workflows/pages.yml` must be at the top level. Include the hidden `.github` folder. Do not upload the surrounding private Portfolio workspace or the ZIP file itself.
-3. In the repository, open **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-4. Open **Actions → Deploy portfolio to GitHub Pages → Run workflow**, select `main`, and run it. Future pushes to `main` deploy automatically.
-5. When the deployment succeeds, open the URL shown by the `github-pages` deployment or Settings → Pages.
+## Explore the portfolio
 
-No custom secret is needed; the workflow uses GitHub's built-in token with scoped Pages permissions. If the first push ran before Pages was enabled, enable it and rerun the workflow. GitHub Pages on the Free plan requires a public source repository. Only the generated `out/` folder becomes the hosted site.
+- **Meet my guide:** an illustrated companion with expressive gestures, winged transitions, and an optional guided tour.
+- **Explore my projects:** each card opens a presentation inside the portfolio, with project context, contributions, visuals, and proposed next steps.
+- **Share a slide:** project and slide selections are reflected in the URL for direct access.
+- **Browse at your pace:** keyboard navigation, motion controls, and a hide-guide option keep the experience in your hands.
 
-## Local commands
+## Featured work
 
-Use Node.js 22.13 or later (the workflow selects Node 22), then install the locked dependencies:
+| Project | Focus |
+| --- | --- |
+| **GenSolar** | Responsive frontend components for a solar management platform, developed during my IdeasPlus internship. |
+| **JBot AI Assistant** | A conversational AI chatbot built with the Gemini API. |
+| **Agriculture Analytics Dashboard** | A Tableau dashboard supporting data-driven farming decisions. |
+| **Video Games Analytics Dashboard** | An interactive Power BI dashboard exploring releases, platforms, developers, and user popularity. |
+| **AI Mood Detection** | Real-time emotion detection using DeepFace and OpenCV. |
 
-```sh
+The presentations distinguish completed work from proposed next steps. Project technologies listed above describe the projects themselves; this portfolio displays their case studies without running those services.
+
+## Run locally
+
+Use **Node.js 22.13 or later** and npm.
+
+```bash
 npm ci
 npm run dev
 ```
 
-The regular development preview remains at localhost:3000. To verify the static site at a repository URL:
+Open the local address printed in the terminal, normally `http://localhost:3000`.
 
-```sh
+## Deploy to GitHub Pages
+
+The portfolio exports to static HTML, CSS, JavaScript, and local artwork. No application server or API key is needed to host it.
+
+1. Keep this repository’s files at the top level, including `.github/workflows/pages.yml` and `package.json`.
+2. Open **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+3. Open **Actions → Deploy portfolio to GitHub Pages → Run workflow** on `main`.
+4. After deployment succeeds, find the website URL in **Settings → Pages**.
+
+Future pushes to `main` trigger deployment automatically. The workflow detects the deployment path for both repository sites and root sites.
+
+See [the deployment guide](GITHUB_PAGES.md) for full setup details.
+
+To preview a repository-path build locally:
+
+```bash
 npm run build:pages -- --base=/portfolio
 npm run preview:pages -- --base=/portfolio --port=4173
 ```
 
-Open `http://localhost:4173/portfolio/`. This preview serves files only, with no application runtime or route fallback. Stop it with Ctrl+C. For a root site or custom domain, omit `--base` from both commands. The GitHub workflow obtains the correct path from `configure-pages` automatically, including when a custom domain is configured.
+Open `http://localhost:4173/portfolio/`. Replace `portfolio` with your repository name; omit `--base` from both commands for a root site.
 
-The build validates that the portfolio HTML was actually exported and that HTML/CSS asset references resolve. It refuses to publish server files, environment files, source maps or symlinks. `out/` is recreated on each Pages build and should not be committed. `npm run build` remains the existing Worker build; use `npm run build:pages` for GitHub.
+## Customize the content
 
-## Updating the portfolio
+| Edit | File or folder |
+| --- | --- |
+| Introduction, experience, education, and contact details | `content/profile.ts` |
+| Project cards | `content/projects.ts` |
+| Project presentations and guide cues | `content/decks/` |
+| Portrait, character paths, and alignment | `content/character.ts` |
+| Character artwork | `public/media/guide/female/` |
+| Project images | `public/media/projects/` |
+| Page layout | `components/portfolio/PortfolioExperience.tsx` |
+| Presentation viewer | `components/portfolio/ProjectDeckDialog.tsx` |
+| Shared character motion | `hooks/use-portrait-motion.ts` |
 
-- Name and contact information: `content/profile.ts`.
-- Project cards: `content/projects.ts`.
-- Native project slides: `content/decks/`.
-- Portrait and avatar files: `public/media/guide/female/`.
-- Avatar paths, eye alignment and cache version: `content/character.ts`. Update `assetVersion` after replacing artwork.
+The portrait and guide are illustrations. To use a personal portrait, replace the image and update its path and alignment in `content/character.ts`. Increment `assetVersion` when replacing artwork so browsers fetch the updated files.
 
-Keep asset paths in content as `/media/...`; the renderer adds the deployment path, including the shared wing-image CSS variable. Project links use query parameters, so refresh and shared slide links work under the repository URL.
+## Technology
 
-The résumé evidence ledger stays private and is not included in the public source package. The public CI validates structure/assets/tests. The original private workspace retains `npm run check:release` for evidence review before publishing changed factual claims. Do not invent contributions, outcomes or metrics while editing decks.
+React 19, TypeScript, Vinext, Vite, Tailwind CSS, GSAP, and GitHub Actions. The project presentations are rendered locally in the browser.
 
-## Build compatibility note
+## Checks
 
-The installed Vinext version does not prepend Next's `basePath` when prerendering `/`. The Pages build therefore leaves route `basePath` empty, uses Vite's `base` and Next's `assetPrefix` for browser assets, and prefixes authored public URLs at render time. It copies the generated `_next` directory to the artifact root because GitHub itself mounts that artifact at the repository path. No dependency files or generated JavaScript are patched. Native navigation preserves `location.pathname`.
+```bash
+npm test
+npm run typecheck
+npm run lint:app
+npm run check:content
+npm run build:pages
+```
 
-See [GitHub's custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) for repository settings and deployment permissions.
+Use `build:pages` for GitHub Pages. The separate `build` command retains the original Worker deployment target.
+
+## Get in touch
+
+I’m interested in Product Manager and Product Owner internship opportunities where I can bring my technical foundation, curiosity, and coordination experience.
+
+[Email me](mailto:juwairiyyahsaiyed1803@gmail.com) · [Connect on LinkedIn](https://www.linkedin.com/in/juwairiyyah-saiyed-2219a2252)
