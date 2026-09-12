@@ -1,0 +1,161 @@
+/* Only the body is interactive; feathers never intercept page controls. */
+.guide-hit {
+  position: fixed;
+  z-index: 75;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 45%;
+  visibility: hidden;
+  touch-action: manipulation;
+}
+.guide-hit:focus-visible {
+  outline: 2px solid #124dff;
+  outline-offset: 5px;
+  background: #124dff0a;
+}
+.deck-guide-hit {
+  position: absolute;
+}
+.guide-invitation {
+  width: min(320px, calc(100vw - 32px));
+  padding: 24px;
+  border-radius: 22px;
+  background: #fffefa;
+  color: #172440;
+  box-shadow: 0 18px 70px #17244024;
+  gap: 14px;
+  animation: none !important;
+}
+div:has(> .guide-invitation) {
+  z-index: 95 !important;
+}
+.guide-invitation [data-slot='popover-title'] {
+  font-size: 25px;
+  font-weight: 650;
+  letter-spacing: -0.7px;
+}
+.guide-invitation [data-slot='popover-description'] {
+  color: #526078;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.guide-invitation .invitation-close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 36px;
+  height: 36px;
+}
+.guide-hello {
+  font-size: 12px;
+  color: #345bce;
+}
+.guide-invitation > button:not(.invitation-close) {
+  min-height: 44px;
+}
+.guide-dismiss {
+  background: transparent;
+  color: #526078;
+  font-size: 14px;
+  cursor: pointer;
+}
+.guide-tour {
+  position: fixed;
+  z-index: 80;
+  bottom: 20px;
+  right: 24px;
+  width: min(370px, calc(100vw - 32px));
+  padding: 16px 18px;
+  border: 1px solid #d7dfef;
+  border-radius: 20px;
+  background: #fffefbf5;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 14px 48px #0d244320;
+}
+.tour-heading,
+.tour-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.tour-heading > span {
+  font:
+    11px var(--font-geist-mono),
+    monospace;
+  letter-spacing: 1px;
+  color: #3e60a1;
+}
+.tour-heading > span > span {
+  margin-left: 12px;
+}
+.tour-heading button {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 6px;
+}
+.tour-description h2 {
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  font-weight: 650;
+  margin: 4px 0 9px;
+}
+.tour-description p {
+  color: #526078;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.tour-controls {
+  margin-top: 12px;
+  gap: 6px;
+}
+.tour-controls button {
+  min-height: 44px;
+}
+.tour-controls > span {
+  font-size: 11px;
+  color: #647187;
+}
+@media (max-width: 640px) {
+  .guide-tour {
+    bottom: 12px;
+    right: 16px;
+    padding: 10px 14px;
+  }
+  .tour-heading button {
+    min-height: 28px;
+    height: 28px;
+  }
+  .tour-description h2 {
+    font-size: 17px;
+    margin: 0 0 5px;
+  }
+  .tour-description p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .tour-controls {
+    margin-top: 6px;
+  }
+  .tour-controls > span {
+    font-size: 10px;
+  }
+}
+.tour-actions {
+  display: flex;
+  gap: 0;
+}
+.tour-actions button {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 8px;
+}

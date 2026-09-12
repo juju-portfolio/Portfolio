@@ -1,0 +1,446 @@
+/* One rig: shoulder-mounted wings, body bank and lift always move together. */
+.character-rig,
+.flight-float {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.character-rig {
+  transform: rotate(var(--bank, 0deg));
+  transform-origin: 50% 28%;
+}
+.character-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.character-pose {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+.character-pose img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+.guide-character:not([data-pose]) .art-neutral,
+.guide-character[data-pose='neutral'] .art-neutral,
+.guide-character[data-pose='smile'] .art-smile,
+.guide-character[data-pose='fly'] .art-fly,
+.guide-character[data-pose='point'] .art-point,
+.guide-character[data-pose='think'] .art-think,
+.guide-character[data-pose='wave'] .art-wave,
+.guide-character[data-pose='shake'] .art-shake,
+.guide-character[data-pose='excited'] .art-excited,
+.guide-character[data-pose='pout'] .art-pout {
+  opacity: 1;
+}
+.guide-character[data-facing='left'] .art-point {
+  transform: scaleX(-1);
+}
+.female-guide[data-facing='left'] .art-point {
+  transform: scaleX(-1);
+}
+.female-guide[data-facing='right'] .art-point {
+  transform: none;
+}
+.female-guide .character-wings {
+  top: -19%;
+}
+.female-guide[data-pose='wave'] .art-wave {
+  transform-origin: 50% 96%;
+  animation: female-greeting 2.4s ease-in-out infinite;
+}
+.guide-wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.female-guide[data-pose='shake'] .art-shake {
+  transform-origin: 50% 70%;
+  animation: female-curious 2.8s ease-in-out infinite;
+}
+@keyframes female-greeting {
+  0%,
+  100% {
+    transform: rotate(-0.3deg);
+  }
+  50% {
+    transform: rotate(0.3deg) translateY(-2px);
+  }
+}
+@keyframes female-curious {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-1.2deg);
+  }
+  70% {
+    transform: rotate(1.2deg);
+  }
+}
+.guide-character:is(
+    [data-phase='photo'],
+    [data-phase='morph'],
+    [data-phase='exit'],
+    [data-phase='dock']
+  )
+  .character-pose {
+  transition: none;
+}
+
+/* Artwork root is 60% down the wing image. At this offset it meets the upper
+   back at 28% of the character height; it cannot drift down to the waist. */
+.character-wings {
+  position: absolute;
+  width: 232%;
+  height: 77.333%;
+  left: -66%;
+  top: -18.4%;
+  opacity: 0;
+  transform: scale(0.68);
+  transform-origin: 50% 60%;
+  transition:
+    opacity 380ms ease,
+    transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  filter: drop-shadow(0 10px 12px #273d5b28);
+}
+.character-wings i {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--guide-wing-image) no-repeat;
+  background-size: 200% 100%;
+  will-change: transform;
+}
+.character-wings .wing-left {
+  left: 0.5%;
+  background-position: 0% 50%;
+  transform-origin: 96% 60%;
+}
+.character-wings .wing-right {
+  right: 0.5%;
+  background-position: 100% 50%;
+  transform-origin: 4% 60%;
+}
+.guide-character[data-pose='fly'] .character-pose {
+  transition: none;
+}
+.guide-character[data-wings='true'] .character-wings {
+  transition: none;
+  opacity: 1;
+  transform: scale(1);
+}
+.guide-character .wing-left {
+  animation: feather-left 1.9s linear infinite;
+}
+.guide-character .wing-right {
+  animation: feather-right 1.9s linear infinite;
+}
+.guide-character[data-wings='false'] .character-wings i {
+  animation-play-state: paused;
+}
+
+/* Temporary local openings; every region keeps its ordinary content width. */
+.guide-region {
+  position: relative;
+  min-width: 0;
+}
+.guide-pocket {
+  height: 0;
+  pointer-events: none;
+  overflow-anchor: none;
+}
+.guide-protected {
+  position: relative;
+  z-index: 21;
+  background: var(--background, #faf9f6);
+}
+.guide-perch {
+  position: absolute;
+  top: 2px;
+  right: 12px;
+  width: 108px;
+  height: 142px;
+  pointer-events: none;
+}
+.guide-perch::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -1px;
+  height: 1px;
+  background: #17305926;
+  box-shadow: 0 3px 4px #17305912;
+}
+.project-card .guide-protected {
+  border-radius: 18px 18px 0 0;
+}
+.project-card .cover-kicker {
+  max-width: calc(100% - 106px);
+}
+.project-card .project-cover h3 {
+  margin-top: 40px;
+  max-width: calc(100% - 72px);
+}
+.project-card .project-cover {
+  width: 100%;
+}
+.project-card .habit-sample {
+  margin-top: auto;
+  margin-bottom: 30px;
+  padding: 20px 26px;
+  gap: 12px;
+  min-width: 62%;
+}
+.about-guide > .guide-protected > .guide-perch {
+  top: 28px;
+  right: max(22px, calc((100vw - 1272px) / 2));
+}
+.about-guide .section-heading {
+  padding-right: 118px;
+  min-height: 148px;
+}
+.contact-guide > .guide-protected > .guide-perch {
+  top: auto;
+  bottom: 30px;
+  right: max(22px, calc((100vw - 1272px) / 2));
+}
+.contact-guide .footer-bottom {
+  min-height: 148px;
+  padding-right: 120px;
+  justify-content: flex-start;
+  gap: 12px;
+}
+.about-guide > .guide-pocket,
+.contact-guide > .guide-pocket {
+  max-width: 1272px;
+  margin: 0 auto;
+}
+.page-character-layer[data-plane='transit'] {
+  z-index: 20;
+}
+.page-character-layer[data-plane='perch'] {
+  z-index: 22;
+}
+@media (min-width: 641px) and (max-width: 1023px) {
+  .project-card .project-cover {
+    min-height: 432px;
+  }
+  .project-card .habit-sample {
+    padding: 16px;
+    min-width: 90%;
+  }
+}
+@media (max-width: 640px) {
+  .project-card .project-cover {
+    height: 420px;
+    min-height: 420px;
+    aspect-ratio: auto;
+  }
+  .project-card .guide-perch {
+    top: 212px;
+  }
+  .project-card .cover-kicker {
+    max-width: 100%;
+  }
+  .project-card .project-cover h3 {
+    font-size: 30px;
+    margin-top: 14px;
+    max-width: 100%;
+  }
+  .project-card .cover-tag {
+    display: none;
+  }
+  .project-card .concept-route {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 16px;
+    margin: 0;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .project-card .concept-route > span {
+    padding: 9px 10px;
+    white-space: nowrap;
+  }
+  .project-card .concept-route i {
+    min-width: 4px;
+  }
+  .project-card .habit-sample {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 16px;
+    min-width: 0;
+    margin: 0;
+    padding: 12px 16px;
+    transform: none;
+  }
+  .project-card .habit-sample span:not(:first-child) {
+    display: none;
+  }
+}
+.guide-character[data-wings='true'] .flight-float {
+  animation: airborne-lift 2.56s ease-in-out infinite;
+}
+@keyframes airborne-lift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* A single aligned arm rotates continuously, with no four-frame sprite swap. */
+.wave-body {
+  clip-path: polygon(
+    0 24.5%,
+    32% 24.5%,
+    36% 20%,
+    36% 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+}
+.wave-forearm {
+  clip-path: polygon(0 0, 36% 0, 36% 20%, 32% 26%, 0 26%);
+  transform-origin: 28% 23.5%;
+}
+.guide-character[data-pose='wave'] .wave-forearm {
+  animation: gentle-wave 1.5s ease-in-out infinite;
+}
+@keyframes gentle-wave {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+.shake-body {
+  clip-path: inset(24% 0 0);
+}
+.shake-head {
+  clip-path: inset(0 0 75%);
+  transform-origin: 50% 24%;
+}
+.guide-character[data-pose='shake'] .shake-head {
+  animation: curious-look 1.8s ease-in-out infinite;
+}
+@keyframes curious-look {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  70% {
+    transform: rotate(4deg);
+  }
+}
+.guide-character[data-pose='excited'][data-wings='false'] .art-excited {
+  animation: happy-rise 1.5s ease-in-out infinite;
+}
+@keyframes happy-rise {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.character-ground {
+  position: absolute;
+  left: 28%;
+  right: 26%;
+  bottom: 1%;
+  height: 2%;
+  border-radius: 50%;
+  background: #17305920;
+  filter: blur(9px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.guide-character[data-phase='guide'][data-wings='false'] .character-ground,
+.guide-character[data-context='deck'][data-wings='false'] .character-ground {
+  opacity: 1;
+}
+
+.deck-character-slot {
+  width: 188px;
+  aspect-ratio: 2/3;
+  flex: none;
+  margin: auto 0 -8px;
+}
+@media (min-width: 701px) and (max-width: 1023px) {
+  .deck-character-slot {
+    width: 152px;
+  }
+}
+@media (max-width: 700px) {
+  .deck-guide {
+    grid-template-columns: 83px 1fr;
+  }
+  .deck-character-slot {
+    grid-column: 1;
+    grid-row: 1/3;
+    width: 83px;
+    margin: 0;
+    align-self: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide-character *,
+  .guide-character *::before,
+  .guide-character *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Pausing preserves CSS animation progress rather than removing the animation. */
+.guide-character[data-animate='false'] *,
+.portfolio[data-guide-visible='false'] .guide-character * {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* The intro stays in front of the portrait-to-page flight. */
+.work-intro {
+  position: relative;
+  z-index: 21;
+  background: var(--background, #faf9f6);
+}
+
+/* A quiet upper body keeps flight graceful; personality belongs to settled poses. */
+.project-card .guide-perch::after {
+  display: none;
+}
+
+.guide-character[data-pose='approve'] .art-approve,
+.guide-character[data-pose='idea'] .art-idea,
+.guide-character[data-pose='thanks'] .art-thanks,
+.guide-character[data-pose='laptop'] .art-laptop,
+.guide-character[data-pose='step'] .art-step,
+.guide-character[data-pose='hop'] .art-hop {
+  opacity: 1;
+}
